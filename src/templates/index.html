@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mars Mission Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class='container'>
+        <div class='jumbotron text-center'>
+            <h1>Mission to Mars</h1>
+            <p><a class="btn btn-primary btn-lg" 
+                  href="/scrape" 
+                  role="button">Scrape New Data
+                </a>
+            </p>
+        </div>
+
+        <div class='row' id='mars_news'>
+            <div class='col-md-12'>
+                <h3><b>Latest Mars News</b></h3>
+                <p><b>{{ scraped_data.news_title }}</b><br>
+                   <small>{{ scraped_data.news_p }}</small>
+                </p>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-8' id='featured_mars_image'>
+                <h3><b>Featured Mars Image</b></h3>
+                <img class='img-responsive'
+                     src="{{ scraped_data.featured_image_url }}">
+            </div>
+        </div>
+
+    </div>
+    <!-- <h1 class="jumbotron ">Player Roster</h1>
+        <div>
+            <ul style="list-style: none;">
+                {% for name in list %}
+                <li>{{ name.img_url }}</li>
+                {% endfor %}
+            </ul>
+
+    <div class='row'>
+        <div class='col-md-12'>
+
+        </div> -->
+    </div>
+    
+</body>
+
+</html>
