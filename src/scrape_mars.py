@@ -45,7 +45,17 @@ def scrape():
     html = browser.html
     soup = bs(html, 'html.parser')
 
-    mars_weather = soup.find("div", class_="js-tweet-text-container").p.text
+    results = soup.find_all("div", class_="js-tweet-text-container")
+
+    ##### Make sure tweet is actually about weather
+    for result in results:
+        tweet = result.p.text
+        tweet_split = tweet.split(" ")
+        ##### 'hPa' or 'temps' are commonly found in weather updates
+        if ('hPa' in tweet_split) or ('temps' in tweet_split):
+            break
+            
+    mars_weather = tweet
     
     ### Mars Fact
     facts_url = "https://space-facts.com/mars/"
@@ -82,10 +92,20 @@ def scrape():
         hemis_img_urls.append(img_dict)
 
     ### Append all scraped data to a dictionary
+    ##### First convert mars_facts into a more usable form
+    mars_facts_dict = mars_facts.to_dict('split')
+
+    mars_facts_list = []
+    for x in range(len(mars_facts_dict['index'])):
+        idx = mars_facts_dict['index'][x]
+        value = mars_facts_dict['data'][x][0]
+        mars_facts_list.append([idx, value])
+
     mars_dict = {'news_title': news_title,
                  'news_p': news_p,
                  'featured_image_url': featured_img_url,
                  'current_weather': mars_weather,
+                 'mars_facts': mars_facts_list,
                  'hemisphere_image_urls': hemis_img_urls}
 
     browser.quit()

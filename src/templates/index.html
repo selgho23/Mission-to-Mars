@@ -6,8 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mars Mission Info</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href='style.css'/> -->
 </head>
+
+<style>
+    #mars_weather{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+        border-width: 3px;
+        border-radius: 3px;
+    }
+    .table-bordered{
+        border: 3px solid gray;
+    }
+
+    .card_columns{
+        column-count: 2;
+    }
+    #featured_mars_image{
+        max-width: 100%;
+    }
+</style>
 
 <body>
     <div class='container'>
@@ -30,28 +49,72 @@
         </div>
 
         <div class='row'>
-            <div class='col-md-8' id='featured_mars_image'>
+            <div class='col-md-8'>
                 <h3><b>Featured Mars Image</b></h3>
                 <img class='img-responsive'
-                     src="{{ scraped_data.featured_image_url }}">
+                     src="{{ scraped_data.featured_image_url }}"
+                     id='featured_mars_image'>
+            </div>
+            <div class='col-md-4'>
+                <br>
+                <div class='card bg-white text-dark border-light'
+                     id='mars_weather'>
+                    <p class='card-body'><b>Current Weather on Mars</b><br>
+                        <small>{{ scraped_data.current_weather }}</small>
+                    </p> 
+                </div>
+                <br>
+                <p><b>Mars Facts</b></p>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"><small><b>value</b></small></th>
+                        </tr>
+                        <tr>
+                            <th scope="col"><small><b>description</b></small></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in scraped_data.mars_facts %}
+                        <tr>
+                            <td><small>{{ row[0] }}</small></td>
+                            <td><small>{{ row[1] }}</small></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-
-    </div>
-    <!-- <h1 class="jumbotron ">Player Roster</h1>
-        <div>
-            <ul style="list-style: none;">
-                {% for name in list %}
-                <li>{{ name.img_url }}</li>
+        <div class='row'>
+            <div class='col-md-12'>
+                <br>
+                <h4 class='text-center'>Mars Hemispheres</h4>
+            </div>
+        </div> 
+        <div class='row'>
+            <div class='card_columns'>
+                {% for image in scraped_data.hemisphere_image_urls %}
+                <div class='card bg-light text-dark border-dark'>
+                    <a href='{{ image.img_url }}'>
+                        <img class='card-img-top img-responsive'
+                             src='{{ image.img_url }}'>
+                    </a>
+                    <div class='card-body'>
+                        <p class='card-title'><b>{{ image.title }}</b></p>
+                    </div>
+                </div>
+                <br>
                 {% endfor %}
-            </ul>
-
-    <div class='row'>
-        <div class='col-md-12'>
-
-        </div> -->
+            </div>
+        </div>
     </div>
-    
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
